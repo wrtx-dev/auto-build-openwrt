@@ -17,7 +17,7 @@ jobs:
         run: sudo apt update && sudo apt -y install build-essential clang flex bison g++ gawk gcc-multilib g++-multilib gettext git libncurses5-dev libssl-dev python3-setuptools rsync swig unzip zlib1g-dev file wget libpcre2-dev && echo "status=success" >> $GITHUB_OUTPUT
 
       - name: clone openwrt
-        if: steps.setup.output.status == 'success' && !cancelled()
+        if: steps.setup.outputs.status == 'success' && !cancelled()
         run: git clone --depth 1 https://github.com/openwrt/openwrt.git
 
       - name: update feeds
@@ -35,7 +35,7 @@ jobs:
 
       - name: pick files
         id: pick
-        if: steps.build.output.status == 'success' && !cancelled()
+        if: steps.build.outputs.status == 'success' && !cancelled()
         run: |
           cd openwrt/bin/targets/*/*
           rm -rf packages
@@ -44,7 +44,7 @@ jobs:
 
       - name: upload
         uses: actions/upload-artifact@v4
-        if: steps.pick.output.status == 'success' && !cancelled()
+        if: steps.pick.outputs.status == 'success' && !cancelled()
         with:
           name: OpenWrt_firmware
           path: ${{ env.FIRMWARE }}
