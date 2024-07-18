@@ -39,7 +39,7 @@ jobs:
         run: |
           cd openwrt/bin/targets/*/*
           rm -rf packages
-          echo "FIREWARE=$(pwd)" >>$GITHUB_ENV
+          echo "FIRMWARE=$(pwd)" >>$GITHUB_ENV
           echo "status=success" >> $GITHUB_OUTPUT
 
       - name: upload
