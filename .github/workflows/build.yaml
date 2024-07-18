@@ -28,15 +28,15 @@ jobs:
         run: cd openwrt && make ARCH=x86_64 defconfig
 
       - name: build openwrt
-        run: cd openwrt && make -j$(($(nproc) *2))
+        run: cd openwrt && make -j$(($(nproc) *2)) && echo "status=success" >> $GITHUB_OUTPUT
 
       - name: pick files
         if: steps.build.output.status == 'success' && !cancelled()
         run: |
           cd openwrt/bin/targets/*/*
           rm -rf packages
-          echo "::set-env name=FIRMWARE::$(pwd)"
-          echo "::set-output name=status::success"
+          echo "FIREWARE=$(pwd)" >>$GITHUB_ENV
+          echo "status=success" >> $GITHUB_OUTPUT
 
       - name: upload
         uses: actions/upload-artifact@v4
