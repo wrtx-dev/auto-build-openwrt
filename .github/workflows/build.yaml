@@ -37,7 +37,8 @@ jobs:
           rm -rf packages
           echo "::set-env name=FIRMWARE::$(pwd)"
           echo "::set-output name=status::success"
-      -name: upload
+
+      - name: upload
         uses: actions/upload-artifact@v4
         if: steps.pick.output.status == "success" && !cacelled()
         with:
