@@ -28,7 +28,7 @@ jobs:
         run: cd openwrt && make ARCH=x86_64 defconfig
 
       - name: build openwrt
-        run: cd openwrt && make -j$(nproc)
+        run: cd openwrt && make -j$(nproc) V=s
 
       - name: pick files
         if: steps.build.output.status == 'success' && !cancelled()
