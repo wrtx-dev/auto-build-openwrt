@@ -28,4 +28,4 @@ jobs:
         run: cd openwrt && make defconfig
 
       - name: build openwrt
-        run: make -j$(proc)
+        run: cd openwrt && make -j$(proc)
