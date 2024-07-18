@@ -31,7 +31,7 @@ jobs:
         run: cd openwrt && make -j$(nproc)
 
       - name: pick files
-        if: steps.build.output.status == "success" && !cancelled()
+        if: steps.build.output.status == 'success' && !cancelled()
         run: |
           cd openwrt/bin/targets/*/*
           rm -rf packages
@@ -40,7 +40,7 @@ jobs:
 
       - name: upload
         uses: actions/upload-artifact@v4
-        if: steps.pick.output.status == "success" && !cacelled()
+        if: steps.pick.output.status == 'success' && !cacelled()
         with:
           name: OpenWrt_firmware
           path: ${{ env.FIRMWARE }}
