@@ -41,7 +41,7 @@ jobs:
           git reset --hard FETCH_HEAD
 
       - name: build wrtx
-        run: cd wrtx && make && echo "WRTX_BIN=$(pwd)/wrtx" >> $GITHUB_ENV && echo "WRTX_VERSION=$(cat VERSION)" >> $GITHUB_ENV
+        run: cd wrtx && make modupdate && make && echo "WRTX_BIN=$(pwd)/wrtx" >> $GITHUB_ENV && echo "WRTX_VERSION=$(cat VERSION)" >> $GITHUB_ENV
 
       - name: clone openwrt
         run: bash clone_openwrt.sh ${{ inputs.openwrt_version }}
