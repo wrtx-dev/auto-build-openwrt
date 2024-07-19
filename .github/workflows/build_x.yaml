@@ -46,7 +46,7 @@ jobs:
 
       - name: build openwrt
         id: build
-        run: cd openwrt && make -j$(($(nproc) *2)) && echo "status=success" >> $GITHUB_OUTPUT
+        run: cd openwrt && make -j2 && echo "status=success" >> $GITHUB_OUTPUT
 
       - name: pick files
         id: pick
