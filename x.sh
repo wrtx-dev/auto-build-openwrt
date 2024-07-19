@@ -10,6 +10,7 @@ echo ___________________________________________________________________________
 echo
 echo To connect to this session copy-n-paste the following into a terminal:
 tmate -S /tmp/tmate.sock display -p '#{tmate_ssh}'
+tmate -S /tmp/tmate.sock display -p '#{tmate_web}'
 
 timeout=$((15*60))
 while [ -S /tmp/tmate.sock ]; do
