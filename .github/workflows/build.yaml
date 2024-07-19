@@ -2,7 +2,12 @@ name:
   build-openwrt
 
 on:
-  workflow_dispatch
+  workflow_dispatch:
+    inputs:
+      commit_id:
+        description: "commit id, sha1 value"
+        required: true
+        type: string
 
 jobs:
   build:
@@ -18,7 +23,7 @@ jobs:
 
       - name: clone openwrt
         if: steps.setup.outputs.status == 'success' && !cancelled()
-        run: bash clone_openwrt_by_commit_id.sh
+        run: bash clone_openwrt_by_commit_id.sh ${{ inputs.commit_id }}
 
       - name: update feeds
         run: cd openwrt && ./scripts/feeds update -a
