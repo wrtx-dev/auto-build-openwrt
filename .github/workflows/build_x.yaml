@@ -12,7 +12,7 @@ on:
       menu_config:
         description: "make menuconfig"
         required: true
-        type: bool
+        type: boolean
 
 
 jobs:
