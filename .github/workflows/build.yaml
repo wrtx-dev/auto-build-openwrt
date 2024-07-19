@@ -26,6 +26,9 @@ jobs:
       - name: install feeds
         run: cd openwrt && ./scripts/feeds install -a
 
+      - name: copy .config file
+        run: cp x86_64-config openwrt/.config
+
       - name: build openwrt
         id: build
         run: cd openwrt && make -j$(($(nproc) *2)) && echo "status=success" >> $GITHUB_OUTPUT

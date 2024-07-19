@@ -10,6 +10,3 @@ git init && git remote add origin https://git.openwrt.org/openwrt/openwrt.git &&
 
 
 echo -e "src-git passwalldep https://github.com/xiaorouji/openwrt-passwall-packages.git \nsrc-git passwall https://github.com/xiaorouji/openwrt-passwall2.git" >> feeds.conf.default || exit 1
-
-echo "copy .config file"
-cp -v ../x86_64-config ./ || exit -1
