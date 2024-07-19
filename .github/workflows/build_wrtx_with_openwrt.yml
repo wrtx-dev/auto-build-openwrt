@@ -1,5 +1,5 @@
 name:
-  build-openwrt
+  build-wrtx-with-openwrt
 
 on:
   workflow_dispatch:
