@@ -18,16 +18,13 @@ jobs:
 
       - name: clone openwrt
         if: steps.setup.outputs.status == 'success' && !cancelled()
-        run: git clone --depth 1 https://github.com/openwrt/openwrt.git
+        run: bash clone_openwrt_by_commit_id.sh
 
       - name: update feeds
         run: cd openwrt && ./scripts/feeds update -a
 
       - name: install feeds
         run: cd openwrt && ./scripts/feeds install -a
-
-      - name: make defconfig
-        run: cd openwrt && make ARCH=x86_64 defconfig
 
       - name: build openwrt
         id: build
