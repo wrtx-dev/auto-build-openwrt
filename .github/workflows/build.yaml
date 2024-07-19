@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       commit_id:
-        description: "commit id, sha1 value"
+        description: "tag or branch or commit id(sha1 value)"
         required: true
         type: string
         default: "715634e6d1443eacdcb84b04d1028c1564b08dbf"
@@ -24,7 +24,7 @@ jobs:
 
       - name: clone openwrt
         if: steps.setup.outputs.status == 'success' && !cancelled()
-        run: bash clone_openwrt_by_commit_id.sh ${{ inputs.commit_id }}
+        run: bash clone_openwrt.sh ${{ inputs.commit_id }}
 
       - name: update feeds
         run: cd openwrt && ./scripts/feeds update -a
@@ -52,5 +52,5 @@ jobs:
         uses: actions/upload-artifact@v4
         if: steps.pick.outputs.status == 'success' && !cancelled()
         with:
-          name: OpenWrt_firmware
-          path: ${{ env.FIRMWARE }}/*
+          name: openwrt_rootfs
+          path: ${{ env.FIRMWARE }}/*rootfs.tar.gz
