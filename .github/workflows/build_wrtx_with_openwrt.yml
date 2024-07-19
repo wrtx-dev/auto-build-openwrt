@@ -19,7 +19,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    
+
       - name: checkout
         uses: actions/checkout@v4
 
@@ -40,7 +40,7 @@ jobs:
           git fetch origin ${{ inputs.wrtx_version }}
           git reset --hard FETCH_HEAD
 
-      -name: build wrtx
+      - name: build wrtx
         run: cd wrtx && make && echo "WRTX_BIN=$(pwd)/wrtx" >> $GITHUB_ENV && echo "WRTX_VERSION=$(cat VERSION)" >> $GITHUB_ENV
 
       - name: clone openwrt
