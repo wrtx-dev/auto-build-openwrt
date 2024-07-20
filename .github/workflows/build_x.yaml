@@ -42,7 +42,7 @@ jobs:
 
       - name: make menuconfig
         if: ${{ inputs.menu_config }}
-        run: bash x.sh
+        uses: mxschmitt/action-tmate@v3
 
       - name: build openwrt
         id: build
