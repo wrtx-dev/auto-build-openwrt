@@ -43,6 +43,8 @@ jobs:
       - name: make menuconfig
         if: ${{ inputs.menu_config }}
         uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
 
       - name: build openwrt
         id: build
