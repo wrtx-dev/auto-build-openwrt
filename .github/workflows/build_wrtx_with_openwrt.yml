@@ -98,7 +98,7 @@ jobs:
       - name: unpack openwrt rootfs
         id: unpack
         env:
-          ROOTFS_FILE: ${{ jobs.build-openwrt.outputs.rootfs }}
+          ROOTFS_FILE: ${{ needs.build-openwrt.outputs.rootfs }}
         run: |
           mkdir openwrt_rootfs
           tar xvzf ${{ env.ROOTFS_FILE }} -C openwrt_rootfs
