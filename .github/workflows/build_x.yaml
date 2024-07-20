@@ -43,8 +43,10 @@ jobs:
       - name: make menuconfig
         if: ${{ inputs.menu_config }}
         uses: mxschmitt/action-tmate@v3
+        timeout-minutes: 15
         with:
           limit-access-to-actor: false
+          
 
       - name: build openwrt
         id: build
