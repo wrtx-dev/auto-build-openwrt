@@ -97,9 +97,11 @@ jobs:
 
       - name: unpack openwrt rootfs
         id: unpack
+        env:
+          ROOTFS_FILE: ${{ jobs.build-openwrt.outputs.rootfs }}
         run: |
           mkdir openwrt_rootfs
-          tar xvzf ${{ jobs.build-openwrt.outputs.rootfs }} -C openwrt_rootfs
+          tar xvzf ${{ env.ROOTFS_FILE }} -C openwrt_rootfs
           echo "status=success" >> $GITHUB_OUTPUT
 
       - name: make deb package
