@@ -43,7 +43,7 @@ jobs:
       - name: make menuconfig
         if: ${{ inputs.menu_config }}
         uses: mxschmitt/action-tmate@v3
-        timeout-minutes: 15
+        timeout-minutes: 150
         with:
           limit-access-to-actor: false
           
