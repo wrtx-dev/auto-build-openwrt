@@ -46,6 +46,16 @@ jobs:
         timeout-minutes: 150
         with:
           limit-access-to-actor: false
+      
+      - name: auto build
+        if: !${{ inputs.menu_confg }}
+        run: |
+          cd openwrt
+          ./scripts/diffconfig.sh .config > diffconfig 
+          mv diffconfig .config 
+          make defconfig 
+          make oldconfig 
+          make -j$(nproc)
           
 
       - name: pick files
