@@ -38,7 +38,6 @@ jobs:
 
             - name: set file system
               run: |
-                echo "SCRIPTS_DIR=$(pwd)" >> $GITHUB_ENV
                 hdiutil create -size 20g -type SPARSE -fs "Case-sensitive HFS+" \
                     -volname OpenWrt OpenWrt.sparseimage
                 hdiutil attach OpenWrt.sparseimage
@@ -59,7 +58,7 @@ jobs:
               run: |
                 cd ${{ env.openwrt_volumn }}
                 mkdir openwrt
-                bash ${{ env.SCRIPTS_DIR }}/clone_openwrt.sh ${{ inputs.openwrt_version }}
+                bash ${{ env.GITHUB_WORKSPACE }}/clone_openwrt.sh ${{ inputs.openwrt_version }}
             
             - name: update feeds
               run: |
@@ -77,7 +76,7 @@ jobs:
               run: |
                 source ${{ env.openwrt_volumn }}/env.sh
                 cd ${{ env.openwrt_volumn }}
-                cp ${{ env.SCRIPTS_DIR }}/x86_64-config ${{ env.openwrt_dir }}/.config
+                cp ${{ env.GITHUB_WORKSPACE }}/x86_64-config ${{ env.openwrt_dir }}/.config
                 cd ${{ env.openwrt_dir }}
                 bash ./scripts/diffconfig.sh .config > diffconfig
                 mv diffconfig .config
