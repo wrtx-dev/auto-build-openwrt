@@ -37,7 +37,7 @@ jobs:
               id: check_arch
               run: |
                 uname -a
-                echo "arch=$(echo ${{ runner.arch }}|tr A-Z a-z)" >> $GITHUB_OUTPUT
+                echo "arch=$(uname -m)" >> $GITHUB_OUTPUT
 
                 
 
