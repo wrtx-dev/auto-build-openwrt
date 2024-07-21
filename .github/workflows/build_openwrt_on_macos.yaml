@@ -8,12 +8,22 @@ on:
           required: true
           type: string
           default: "master"
+        macos_version:
+          description: "set macos' version"
+          required: true
+          type: choice
+          default: latest
+          options:
+            - latest
+            - "12"
+            - "13"
+            - "14"
 
 run-name: build openwrt in ${{ inputs.openwrt_version }}
 
 jobs:
     build-openwrt:
-        runs-on: macos-latest
+        runs-on: macos-${{ inputs.macos_version }}
         env:
             openwrt_dir: /Volumes/OpenWrt/openwrt
             openwrt_volumn: /Volumes/OpenWrt
