@@ -4,7 +4,8 @@ on:
     workflow_dispatch:
       inputs:
         openwrt_version:
-          description: "set openwrt's source code's brach or tag or commit id(sha1 value)"
+          description: "set openwrt's source code's brach \
+            or tag or commit id(sha1 value)"
           required: true
           type: string
           default: "master"
@@ -19,7 +20,8 @@ on:
             - "13"
             - "14"
 
-run-name: "build openwrt version: ${{ inputs.openwrt_version }} using macos ${{ inputs.macos_version }}"
+run-name: "build openwrt version: ${{ inputs.openwrt_version }} \
+    using macos ${{ inputs.macos_version }}"
 
 jobs:
     build-openwrt:
@@ -37,7 +39,8 @@ jobs:
             - name: set file system
               run: |
                 echo "SCRIPTS_DIR=$(pwd)" >> $GITHUB_ENV
-                hdiutil create -size 20g -type SPARSE -fs "Case-sensitive HFS+" -volname OpenWrt OpenWrt.sparseimage
+                hdiutil create -size 20g -type SPARSE -fs "Case-sensitive HFS+" \
+                    -volname OpenWrt OpenWrt.sparseimage
                 hdiutil attach OpenWrt.sparseimage
 
             - name: install deps
