@@ -60,7 +60,7 @@ jobs:
                 echo 'export PATH' >> env.sh
 
             - name: create x86_64 env.sh
-              if: steps.check_arch.outputs.arch == 'X86_64'
+              if: steps.check_arch.outputs.arch == 'x86_64'
               run: |
                 cd ${{ env.openwrt_volumn }}
                 echo 'PATH="/usr/local/opt/make/libexec/gnubin:$PATH"' >> env.sh
