@@ -95,7 +95,7 @@ jobs:
               id: pick
               if: steps.build.outputs.status == 'success' && !cancelled()
               run: |
-                cd openwrt/bin/targets/*/*
+                cd ${{ env.openwrt_dir }}/bin/targets/*/*
                 rm -rf packages
                 echo "ROOTFS_FILE=$(pwd)/$(ls *rootfs.tar.gz)" >> $GITHUB_ENV
                 echo "ROOTFS=$(ls *rootfs.tar.gz)" >> $GITHUB_OUTPUT
