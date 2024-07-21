@@ -38,13 +38,23 @@ jobs:
         run: bash clone_openwrt.sh ${{ inputs.openwrt_version }}
       
       - name: update feeds
-        run: cd openwrt && ./scripts/feeds update -a
+        run: |
+          cd openwrt
+          ./scripts/feeds update -a
 
       - name: install feeds
-        run: cd openwrt && ./scripts/feeds install -a
+        run: |
+          cd openwrt
+          ./scripts/feeds install -a
 
-      - name: copy .config file
-        run: cp x86_64-config openwrt/.config
+      - name: make .config file
+        run: |
+          cp x86_64-config openwrt/.config
+          cd openwrt
+          bash ./scripts/diffconfig.sh .config > diffconfig
+          mv diffconfig .config
+          make defconfig
+          make oldconfig
 
       - name: build openwrt
         id: build
@@ -59,7 +69,7 @@ jobs:
         run: |
           cd openwrt/bin/targets/*/*
           rm -rf packages
-          echo "FIRMWARE=$(pwd)/$(ls *rootfs.tar.gz)" >>$GITHUB_ENV
+          echo "ROOTFS_FILE=$(pwd)/$(ls *rootfs.tar.gz)" >>$GITHUB_ENV
           echo "ROOTFS=$(ls *rootfs.tar.gz)" >> $GITHUB_OUTPUT
           echo "status=success" >> $GITHUB_OUTPUT
 
@@ -69,7 +79,7 @@ jobs:
         if: steps.pick.outputs.status == 'success' && !cancelled()
         with:
           name: openwrt_rootfs
-          path: ${{ env.FIRMWARE }}
+          path: ${{ env.ROOTFS_FILE }}
 
   build-wrtx:
     name: build-wrtx
