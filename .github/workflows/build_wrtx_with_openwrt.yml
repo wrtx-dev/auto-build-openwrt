@@ -110,7 +110,7 @@ jobs:
         run: |
           bash pack_deb.sh $(pwd)/openwrt_rootfs ${{ env.WRTX_BIN }} ${{ env.WRTX_VERSION }}
           echo "status == success" >> $GITHUB_OUTPUT
-          echo "echo DEB_PACKAGE=$(ls *.deb)" >> $GITHUB_ENV
+          echo "DEB_PACKAGE=$(ls *.deb)" >> $GITHUB_ENV
 
       - name: artifact
         uses: actions/upload-artifact@v4
