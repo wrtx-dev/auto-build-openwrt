@@ -13,13 +13,16 @@ run-name: build openwrt in ${{ inputs.openwrt_version }}
 
 jobs:
     build-openwrt:
-        runs-on: macos-13
+        runs-on: macos-latest
         env:
             openwrt_dir: /Volumes/OpenWrt/openwrt
             openwrt_volumn: /Volumes/OpenWrt
         steps:
             - name: checkout
               uses: actions/checkout@v4
+
+            - name: check arch
+              run: uname -a
 
             - name: set file system
               run: |
@@ -69,9 +72,28 @@ jobs:
                 make oldconfig
 
             - name: make
+              id: buld
               run: |
                 cd ${{ env.openwrt_dir }}
                 source ${{ env.openwrt_volumn }}/env.sh
                 make -j$(nproc)
+                echo "status=success" >> $GITHUB_OUTPUT
+
+            - name: pick files
+              id: pick
+              if: steps.build.outputs.status == 'success' && !cancelled()
+              run: |
+                cd openwrt/bin/targets/*/*
+                rm -rf packages
+                echo "ROOTFS_FILE=$(pwd)/$(ls *rootfs.tar.gz)" >> $GITHUB_ENV
+                echo "ROOTFS=$(ls *rootfs.tar.gz)" >> $GITHUB_OUTPUT
+                echo "status=success" >> $GITHUB_OUTPUT
+
+            - name: artifact
+              uses: actions/upload-artifact@v4
+              if: steps.pick.outputs.status == 'success' && !cancelled()
+              with:
+                name: openwrt_rootfs
+                path: ${{ env.ROOTFS_FILE }}
 
                 
