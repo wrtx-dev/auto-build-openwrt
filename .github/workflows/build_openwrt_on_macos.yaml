@@ -43,7 +43,6 @@ jobs:
 
             - name: set file system
               run: |
-                false
                 hdiutil create -size 20g -type SPARSE -fs "Case-sensitive HFS+" \
                     -volname OpenWrt OpenWrt.sparseimage
                 hdiutil attach OpenWrt.sparseimage
