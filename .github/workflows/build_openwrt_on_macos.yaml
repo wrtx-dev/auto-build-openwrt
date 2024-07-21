@@ -43,7 +43,7 @@ jobs:
               run: |
                 cd ${{ env.openwrt_volumn }}
                 mkdir openwrt
-                sh ${{ env.SCRIPTS_DIR }}/clone_openwrt.sh ${{ inputs.openwrt_version }}
+                bash ${{ env.SCRIPTS_DIR }}/clone_openwrt.sh ${{ inputs.openwrt_version }}
             
             - name: update feeds
               run: |
