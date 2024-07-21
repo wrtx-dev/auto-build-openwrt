@@ -51,11 +51,10 @@ jobs:
 
       - name: manual build
         if: ${{ inputs.build_manunal }}
-        # uses: mxschmitt/action-tmate@v3
-        # timeout-minutes: 150
-        # with:
-        #   limit-access-to-actor: false
-        run: bash x.sh
+        uses: mxschmitt/action-tmate@v3
+        timeout-minutes: 150
+        with:
+          limit-access-to-actor: false
       
       - name: auto build
         if: ${{ !inputs.build_manunal }}
