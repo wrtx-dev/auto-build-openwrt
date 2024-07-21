@@ -35,11 +35,7 @@ jobs:
 
             - name: check arch
               id: check_arch
-              run: |
-                archs=($(uname -a))
-                mac_arch=${archs[${#archs[@]}]}
-                echo "arch=${mac_arch}" >> $GITHUB_OUTPUT
-                echo "arch: ${mac_arch}"
+              run: archs=($(uname -a)) && mac_arch=${archs[${#archs[@]}]} &&echo "arch=${mac_arch}" >> $GITHUB_OUTPUT && echo "arch: ${mac_arch}"
 
 
             - name: set file system
