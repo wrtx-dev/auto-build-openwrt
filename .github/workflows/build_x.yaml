@@ -46,8 +46,14 @@ jobs:
           cd openwrt 
           ./scripts/feeds install -a
 
-      - name: copy .config file
-        run: cp x86_64-config openwrt/.config
+      - name: make .config file
+        run: |
+          cp x86_64-config openwrt/.config
+          cd openwrt
+          ./scripts/diffconfig.sh .config > diffconfig 
+          mv diffconfig .config 
+          make defconfig 
+          make oldconfig 
 
       - name: manual build
         if: ${{ inputs.build_manunal }}
@@ -60,10 +66,6 @@ jobs:
         if: ${{ !inputs.build_manunal }}
         run: |
           cd openwrt
-          ./scripts/diffconfig.sh .config > diffconfig 
-          mv diffconfig .config 
-          make defconfig 
-          make oldconfig 
           make -j$(nproc)
           
 
