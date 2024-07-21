@@ -108,7 +108,7 @@ jobs:
         id: pack
         if: steps.unpack.outputs.status == 'success' && !cancelled()
         run: |
-          pack_deb.sh $(pwd)/openwrt_rootfs ${{ env.WRTX_BIN }} ${{ env.WRTX_VERSION }}
+          bash pack_deb.sh $(pwd)/openwrt_rootfs ${{ env.WRTX_BIN }} ${{ env.WRTX_VERSION }}
           echo "status == success" >> $GITHUB_OUTPUT
           echo "echo DEB_PACKAGE=$(ls *.deb)" >> $GITHUB_ENV
 
