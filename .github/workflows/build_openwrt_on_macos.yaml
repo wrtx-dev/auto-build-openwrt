@@ -19,7 +19,7 @@ on:
             - "13"
             - "14"
 
-run-name: build openwrt in ${{ inputs.openwrt_version }}
+run-name: "build openwrt version: ${{ inputs.openwrt_version }} using macos ${{ inputs.macos_version }}"
 
 jobs:
     build-openwrt:
