@@ -48,7 +48,7 @@ jobs:
           limit-access-to-actor: false
       
       - name: auto build
-        if: ${{ !inputs.menu_confg }}
+        if: ${{ !inputs.menu_config }}
         run: |
           cd openwrt
           ./scripts/diffconfig.sh .config > diffconfig 
