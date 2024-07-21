@@ -85,7 +85,7 @@ jobs:
                 make oldconfig
 
             - name: make
-              id: buld
+              id: build
               run: |
                 cd ${{ env.openwrt_dir }}
                 source ${{ env.openwrt_volumn }}/env.sh
