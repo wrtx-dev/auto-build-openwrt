@@ -51,8 +51,8 @@ jobs:
         run: |
           cd openwrt/bin/targets/*/*
           rm -rf packages
-          echo "FIRMWARE=$(pwd)/$(ls *.rootfs.tar.gz)" >>$GITHUB_ENV
-          echo "ROOTFS=$(ls *.rootfs.tar.gz)" >> $GITHUB_OUTPUT
+          echo "FIRMWARE=$(pwd)/$(ls *rootfs.tar.gz)" >>$GITHUB_ENV
+          echo "ROOTFS=$(ls *rootfs.tar.gz)" >> $GITHUB_OUTPUT
           echo "status=success" >> $GITHUB_OUTPUT
 
 
