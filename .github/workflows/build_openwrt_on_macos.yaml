@@ -30,11 +30,11 @@ jobs:
             - name: install deps
               run: |
                 cd /Volumes/OpenWrt
-                echo 'PATH="/opt/homebrew/opt/make/libexec/gnubin:$PATH" >> env.sh
-                echo 'PATH="/opt/homebrew/opt/gnu-getopt/bin:$PATH" >> env.sh
-                echo 'PATH="/opt/homebrew/opt/gettext/bin:$PATH" >> env.sh
-                echo 'PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH" >> env.sh
-                echo 'PATH="/opt/homebrew/opt/findutils/libexec/gnubin:$PATH" >> env.sh
+                echo 'PATH="/opt/homebrew/opt/make/libexec/gnubin:$PATH"' >> env.sh
+                echo 'PATH="/opt/homebrew/opt/gnu-getopt/bin:$PATH"' >> env.sh
+                echo 'PATH="/opt/homebrew/opt/gettext/bin:$PATH"' >> env.sh
+                echo 'PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"' >> env.sh
+                echo 'PATH="/opt/homebrew/opt/findutils/libexec/gnubin:$PATH"' >> env.sh
                 echo 'export PATH' >> env.sh
                 brew install coreutils findutils gawk grep \
                     gnu-getopt gnu-tar wget diffutils git-extras quilt svn make ncurses pkg-config
