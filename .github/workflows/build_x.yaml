@@ -48,13 +48,8 @@ jobs:
           limit-access-to-actor: false
           
 
-      - name: build openwrt
-        id: build
-        run: cd openwrt && make -j2 && echo "status=success" >> $GITHUB_OUTPUT
-
       - name: pick files
         id: pick
-        if: steps.build.outputs.status == 'success' && !cancelled()
         run: |
           cd openwrt/bin/targets/*/*
           rm -rf packages
