@@ -69,7 +69,7 @@ jobs:
         run: |
           cd openwrt/bin/targets/*/*
           rm -rf packages
-          echo "ROOTFS_FILE=$(pwd)/$(ls *rootfs.tar.gz)" >>$GITHUB_ENV
+          echo "ROOTFS_FILE=$(pwd)/$(ls *rootfs.tar.gz)" >> $GITHUB_ENV
           echo "ROOTFS=$(ls *rootfs.tar.gz)" >> $GITHUB_OUTPUT
           echo "status=success" >> $GITHUB_OUTPUT
 
