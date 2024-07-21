@@ -39,6 +39,7 @@ jobs:
                 archs=$(uname -a)
                 mac_arch=${archs[${#archs[@]}]}
                 echo "arch=${mac_arch}" >> $GITHUB_OUTPUT
+                echo "arch: ${mac_arch}"
 
 
             - name: set file system
@@ -48,7 +49,7 @@ jobs:
                 hdiutil attach OpenWrt.sparseimage
 
             - name: crate arm64 env.sh
-              if: steps.check_arch.outputs.arch == 'arm64'
+              if: steps.check_arch.outputs.arch != 'x86_64'
               run: |
                 cd ${{ env.openwrt_volumn }}
                 echo 'PATH="/opt/homebrew/opt/make/libexec/gnubin:$PATH"' >> env.sh
@@ -59,7 +60,7 @@ jobs:
                 echo 'export PATH' >> env.sh
 
             - name: create x86_64 env.sh
-              if: steps.check_arch.outputs.arch != 'arm64'
+              if: steps.check_arch.outputs.arch == 'x86_64'
               run: |
                 cd ${{ env.openwrt_volumn }}
                 echo 'PATH="/usr/local/opt/make/libexec/gnubin:$PATH"' >> env.sh
