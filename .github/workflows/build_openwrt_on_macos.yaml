@@ -1,0 +1,77 @@
+name: macos-build-openwrt
+
+on:
+    workflow_dispatch:
+      inputs:
+        openwrt_version:
+          description: "set openwrt's source code's brach or tag or commit id(sha1 value)"
+          required: true
+          type: string
+          default: "master"
+
+run-name: build openwrt in ${{ inputs.openwrt_version }}
+
+jobs:
+    build-openwrt:
+        runs-on: macos-13
+        env:
+            openwrt_dir: /Volumes/OpenWrt/openwrt
+            openwrt_volumn: /Volumes/OpenWrt
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+
+            - name: set file system
+              run: |
+                echo "SCRIPTS_DIR=$(pwd)" >> $GITHUB_ENV
+                hdiutil create -size 20g -type SPARSE -fs "Case-sensitive HFS+" -volname OpenWrt OpenWrt.sparseimage
+                hdiutil attach OpenWrt.sparseimage
+
+            - name: install deps
+              run: |
+                cd /Volumes/OpenWrt
+                echo 'PATH="/opt/homebrew/opt/make/libexec/gnubin:$PATH" >> env.sh
+                echo 'PATH="/opt/homebrew/opt/gnu-getopt/bin:$PATH" >> env.sh
+                echo 'PATH="/opt/homebrew/opt/gettext/bin:$PATH" >> env.sh
+                echo 'PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH" >> env.sh
+                echo 'PATH="/opt/homebrew/opt/findutils/libexec/gnubin:$PATH" >> env.sh
+                echo 'export PATH' >> env.sh
+                brew install coreutils findutils gawk grep \
+                    gnu-getopt gnu-tar wget diffutils git-extras quilt svn make ncurses pkg-config
+
+            - name: clone openwrt
+              run: |
+                cd ${{ env.openwrt_volumn }}
+                mkdir openwrt
+                sh ${{ env.SCRIPTS_DIR }}/clone_openwrt.sh ${{ inputs.openwrt_version }}
+            
+            - name: update feeds
+              run: |
+                source ${{ env.openwrt_volumn }}/env.sh
+                cd ${{ env.openwrt_dir }}
+                ./scripts/feeds update -a
+
+            - name: install feeds
+              run: |
+                source ${{ env.openwrt_volumn }}/env.sh
+                cd ${{ env.openwrt_dir }}
+                ./scripts/feeds install -a
+
+            - name: make .config file
+              run: |
+                source ${{ env.openwrt_volumn }}/env.sh
+                cd ${{ env.openwrt_volumn }}
+                cp ${{ env.SCRIPTS_DIR }}/x86_64-config ${{ env.openwrt_dir }}/.config
+                cd ${{ env.openwrt_dir }}
+                bash ./scripts/diffconfig.sh .config > diffconfig
+                mv diffconfig .config
+                make defconfig
+                make oldconfig
+
+            - name: make
+              run: |
+                cd ${{ env.openwrt_dir }}
+                source ${{ env.openwrt_volumn }}/env.sh
+                make -j$(nproc)
+
+                
