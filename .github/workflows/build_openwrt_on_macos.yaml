@@ -70,6 +70,10 @@ jobs:
                 echo 'PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"' >> env.sh
                 echo 'export PATH' >> env.sh
 
+            - name: install arm64e llvm
+              if: steps.check_arch.outputs.arch == 'arm64' && !cancelled()
+              run: arch -arm64e brew install llvm
+
             - name: set env.sh exec
               run: |
                 echo "steps.check_arch.outputs.arch = ${{ steps.check_arch.outputs.arch }}"
