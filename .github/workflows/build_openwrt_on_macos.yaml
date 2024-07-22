@@ -50,7 +50,7 @@ jobs:
             - name: install arm64e llvm
               if: steps.check_arch.outputs.arch == 'arm64' && !cancelled()
               run: |
-                arch -arm64e brew install llvm libelf
+                arch -arm64e brew install libelf llvm
 
             - name: install x86_64 llvm
               if: steps.check_arch.outputs.arch == 'x86_64' && !cancelled()
