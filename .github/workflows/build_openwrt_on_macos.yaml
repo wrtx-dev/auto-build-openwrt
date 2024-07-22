@@ -66,6 +66,8 @@ jobs:
                 echo 'PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"' >> env.sh
                 echo 'PATH="/opt/homebrew/opt/findutils/libexec/gnubin:$PATH"' >> env.sh
                 echo 'PATH="/opt/homebrew/opt/llvm/bin:$PATH"' >> env.sh
+                echo 'export LDFLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -Wl,-rpath,/opt/homebrew/opt/llvm/lib/c++ -L/opt/homebrew/opt/llvm/lib"' >>env.sh
+                echo 'export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"' >> env.sh
                 echo 'export PATH' >> env.sh
 
             - name: create x86_64 env.sh
