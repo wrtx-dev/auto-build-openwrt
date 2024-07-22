@@ -51,7 +51,7 @@ jobs:
               if: steps.check_arch.outputs.arch == 'arm64' && !cancelled()
               run: arch -arm64e brew install llvm
 
-            - name: install arm64e llvm
+            - name: install x86_64 llvm
               if: steps.check_arch.outputs.arch == 'x86_64' && !cancelled()
               run: brew install llvm
 
