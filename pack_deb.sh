@@ -8,9 +8,10 @@ fi
 
 cur_dir=$(pwd)
 install_dir="/usr/local/wrtx"
-wrtx_bin=${2}
+
 args=$@
 images_arr=${args[@]:0: $((${#args[@]} - 2 ))}
+wrtx_bin=${args[$((${#args[@]}-2))]}
 wrtx_base_dir="wrtx_deb"
 wrtx_debian_dir="${wrtx_base_dir}/DEBIAN"
 wrtx_root="${wrtx_base_dir}${install_dir}"
@@ -25,9 +26,9 @@ else
 fi
 
 version="unknown"
-if [ ${3}"ttt" != "ttt" ]
+if [ ${args[$((${#args[@]}-1))]}"ttt" != "ttt" ]
 then
-    version=${3}
+    version=${args[$((${#args[@]}-2))]}
 fi
 
 wrtx_dirs=("bin" "conf" "images" "run" "instances")
