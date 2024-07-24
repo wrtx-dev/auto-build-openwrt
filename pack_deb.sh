@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ $# -ne 3 ]]
+if [[ $# -lt 3 ]]
 then
     echo "Usage: ${0} path_of_rootfs path_of_wrtx_bin version"
     exit 1
@@ -9,7 +9,8 @@ fi
 cur_dir=$(pwd)
 install_dir="/usr/local/wrtx"
 wrtx_bin=${2}
-rootfs=${1}
+args=$@
+images_arr=${args[@]:0: $((${#args[@]} - 2 ))}
 wrtx_base_dir="wrtx_deb"
 wrtx_debian_dir="${wrtx_base_dir}/DEBIAN"
 wrtx_root="${wrtx_base_dir}${install_dir}"
@@ -53,7 +54,10 @@ copy_files() {
     cp -v ${cur_dir}/postrm ${wrtx_debian_dir}
     chmod 755 ${wrtx_debian_dir}/postrm
     cp -v ${wrtx_bin} ${wrtx_bin_dir}
-    cp -rvf ${rootfs} ${wrtx_root}/images/
+    for rootfs in ${images_arr[@]}
+    do
+        cp -rvf ${rootfs} ${wrtx_root}/images/
+    done
 
 }
 
