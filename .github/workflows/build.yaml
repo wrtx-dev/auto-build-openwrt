@@ -8,7 +8,7 @@ on:
         description: "tag or branch or commit id(sha1 value)"
         required: true
         type: string
-        default: "715634e6d1443eacdcb84b04d1028c1564b08dbf"
+        default: "master"
 
 jobs:
   build:
