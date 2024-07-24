@@ -92,9 +92,6 @@ jobs:
       rootfs: ${{ steps.pick.outputs.ROOTFS }} 
     steps:
 
-      - name: checkout
-        uses: actions/checkout@v4
-
       - name: setup build environ
         id: setup
         run: |
@@ -119,10 +116,13 @@ jobs:
           remove-codeql: true
           remove-docker-images: true
 
-      - name: check distk space
+      - name: check disk space
         run: |
           du -h -d 0
           df -hT
+
+      - name: checkout
+        uses: actions/checkout@v4
 
       - name: clone ImmortalWrt
         run: |
