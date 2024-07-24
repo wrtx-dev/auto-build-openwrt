@@ -51,16 +51,25 @@ jobs:
           cd ImmortalWrt
           ./scripts/feeds install -a
 
+      - name: make config file
+        run: |
+          cp immortalwrt_x86_config ImmortalWrt/
+          cd ImmortalWrt
+          bash ./scripts/diffconfig.sh .config > diffconfig
+          mv diffconfig .config
+          make defconfig
+          make oldconfig
+
       # - name: copy .config file
       #   run: cp x86_64-config ImmortalWrt/.config
 
       # - name: build ImmortalWrt
       #   id: build
       #   run: cd ImmortalWrt && make -j$(($(nproc) *2)) && echo "status=success" >> $GITHUB_OUTPUT
-      - name: make def config
-        run: |
-          cd ImmortalWrt
-          make defconfig
+      # - name: make def config
+      #   run: |
+      #     cd ImmortalWrt
+      #     make defconfig
         
       - name: build ImmortalWrt
         id: build
