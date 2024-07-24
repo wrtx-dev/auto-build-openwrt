@@ -156,7 +156,7 @@ jobs:
         id: build
         run: |
           cd ImmortalWrt
-          make -j$(nproc) && echo "status=success" >> $GITHUB_OUTPUT || make -j1 V=sc
+          make -j$(nproc) && echo "status=success" >> $GITHUB_OUTPUT || make -j1 V=s
 
       - name: pick files
         id: pick
