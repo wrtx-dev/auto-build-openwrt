@@ -9,9 +9,9 @@ fi
 cur_dir=$(pwd)
 install_dir="/usr/local/wrtx"
 
-args=$@
-images_arr=${args[@]:0: $((${#args[@]} - 2 ))}
-wrtx_bin=${args[$(($#-2))]}
+args=("$@")
+images_arr=("${args[@]:0: $((${#args[@]} - 2 ))}")
+wrtx_bin=${args[$((${#args[@]} - 2))]}
 wrtx_base_dir="wrtx_deb"
 wrtx_debian_dir="${wrtx_base_dir}/DEBIAN"
 wrtx_root="${wrtx_base_dir}${install_dir}"
@@ -26,9 +26,9 @@ else
 fi
 
 version="unknown"
-if [ ${args[$(($#-1))]}"ttt" != "ttt" ]
+if [ ${args[$((${#args[@]} - 1))]}"ttt" != "ttt" ]
 then
-    version=${args[$((${#args[@]}-2))]}
+    version=${args[$((${#args[@]}-1))]}
 fi
 
 wrtx_dirs=("bin" "conf" "images" "run" "instances")
@@ -57,8 +57,10 @@ copy_files() {
     cp -v ${wrtx_bin} ${wrtx_bin_dir}
     for rootfs in ${images_arr[@]}
     do
-	mkdir -v ${wrtx_root}/images/${rootfs/%_rootfs/}
-        cp -rvf ${rootfs}/* ${wrtx_root}/images/${rootfs/%_rootfs/}
+	rootfs_name=$(basename ${rootfs})
+	mkdir -v ${wrtx_root}/images/${rootfs_name/%_rootfs/}
+        echo "cp -rvf ${rootfs}/* ${wrtx_root}/images/${rootfs_name/%_rootfs/}"
+        cp -rvf ${rootfs}/* ${wrtx_root}/images/${rootfs_name/%_rootfs/}
     done
 
 }
@@ -72,12 +74,13 @@ mkdir build
 cd build
 mk_deb_dir
 mkdir ${wrtx_debian_dir}
+copy_files
 cat >>${wrtx_debian_dir}/control<<EOF
 Package: wrtX
 Version: ${version}
 Architecture: ${cpu_arch}
 Maintainer: wrtX.dev <wrtx.dev@outlook.com>
-Installed-Size:
+Installed-Size: `du -ks wrtx_deb/usr|cut -f 1`
 Pre-Depends:
 Depends:
 Recommends:
@@ -90,8 +93,10 @@ Description: run openwrt in simple namespace.
 
 EOF
 
-copy_files
 
-dpkg -b ${wrtx_base_dir} wrtx-${wrtx_arch}-${version}.deb
+du -h -d 0
+
+echo "dpkg -b ${wrtx_base_dir} wrtx-${wrtx_arch}-${version}.deb"
+dpkg-deb -v -b ${wrtx_base_dir} wrtx-${wrtx_arch}-${version}.deb
 
 mv wrtx-${wrtx_arch}-${version}.deb ../
