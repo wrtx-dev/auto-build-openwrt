@@ -240,8 +240,10 @@ jobs:
         if: steps.unpack_openwrt.outputs.status == 'success' && steps.unpack_immortal.outputs.status == 'success' && !cancelled()
         run: |
           bash pack_deb.sh $(pwd)/openwrt_rootfs $(pwd)/immortal_rootfs ${{ env.WRTX_BIN }} ${{ env.WRTX_VERSION }}
-          echo "status == success" >> $GITHUB_OUTPUT
+          echo "status=success" >> $GITHUB_OUTPUT
           echo "DEB_PACKAGE=$(ls *.deb)" >> $GITHUB_ENV
+          echo "status=success" 
+          echo "DEB_PACKAGE=$(ls *.deb)" 
 
       - name: artifact
         uses: actions/upload-artifact@v4
