@@ -245,7 +245,7 @@ jobs:
 
       - name: artifact
         uses: actions/upload-artifact@v4
-        if: steps.unpack.outputs.status == 'success' && !cancelled()
+        if: steps.pack.outputs.status == 'success' && !cancelled()
         with:
           name: wrtx_deb
           path: ${{ env.DEB_PACKAGE }}
