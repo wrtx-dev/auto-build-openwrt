@@ -11,7 +11,7 @@ install_dir="/usr/local/wrtx"
 
 args=$@
 images_arr=${args[@]:0: $((${#args[@]} - 2 ))}
-wrtx_bin=${args[$((${#args[@]}-2))]}
+wrtx_bin=${args[$(($#-2))]}
 wrtx_base_dir="wrtx_deb"
 wrtx_debian_dir="${wrtx_base_dir}/DEBIAN"
 wrtx_root="${wrtx_base_dir}${install_dir}"
@@ -26,7 +26,7 @@ else
 fi
 
 version="unknown"
-if [ ${args[$((${#args[@]}-1))]}"ttt" != "ttt" ]
+if [ ${args[$(($#-1))]}"ttt" != "ttt" ]
 then
     version=${args[$((${#args[@]}-2))]}
 fi
@@ -57,7 +57,8 @@ copy_files() {
     cp -v ${wrtx_bin} ${wrtx_bin_dir}
     for rootfs in ${images_arr[@]}
     do
-        cp -rvf ${rootfs} ${wrtx_root}/images/
+	mkdir -v ${wrtx_root}/images/${rootfs/%_rootfs/}
+        cp -rvf ${rootfs}/* ${wrtx_root}/images/${rootfs/%_rootfs/}
     done
 
 }
