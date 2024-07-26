@@ -3,7 +3,7 @@ name:
 
 on:
   schedule:
-    - cron: '10 10 * * *'
+    - cron: '20 18 * * *'
 
 jobs:
   build-openwrt:
